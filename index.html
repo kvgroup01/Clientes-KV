@@ -144,6 +144,18 @@ if (pixelOn) {
 }
 const track = (ev, data, opts) => { if (pixelOn && window.fbq) fbq('track', ev, data || {}, opts || {}); };
 
+const trackCustom = (ev, data, opts) => { if (pixelOn && window.fbq) fbq('trackCustom', ev, data || {}, opts || {}); };
+/* Eventos de progresso: Diagnostico10, Diagnostico25, Diagnostico50, Diagnostico75 (uma vez cada, ao atingir % da barra).
+   Meta não aceita "%" no nome do evento. eventID = <id da visita>_<evento>, para deduplicar com a CAPI. */
+const fired = new Set(); let sid = null;
+function trackProgress(pct){
+  [10, 25, 50, 75].forEach(t => {
+    if (pct < t || fired.has(t)) return;
+    fired.add(t); sid = sid || uuid();
+    trackCustom('Diagnostico' + t, {progresso: t}, {eventID: sid + '_Diagnostico' + t});
+  });
+}
+
 /* ===== PERGUNTAS =====
    opts: [valor, rótulo]. skip(a): pula a pergunta conforme respostas já dadas. */
 const Q = [
@@ -325,6 +337,7 @@ function progress(flow){
   const n = flow.length - 1, d = done ? n : Math.max(0, Math.min(pos - 1, n));
   $('segs').innerHTML = Array.from({length:n}, (_, i) => `<i class="${i < d ? 'on' : ''}"></i>`).join('');
   $('segs').setAttribute('aria-valuenow', Math.round(d / n * 100));
+  if (!done) trackProgress(Math.round(d / n * 100));
   $('cnt').textContent = d; $('tot').textContent = n;
 }
 
@@ -470,6 +483,7 @@ async function submit(e){
     await post(payload);
     done = true; sending = false;
     track('Lead', {content_name:'Quiz Trabalhista', content_category: payload.classificacao}, {eventID: eventId});
+    trackCustom('LeadDiagnostico', {content_name:'Quiz Trabalhista', content_category: payload.classificacao}, {eventID: eventId});
     pos = steps().length; typing = true; render();
     setTimeout(() => { typing = false; render(); }, TYPING_MS);
   } catch (err) {

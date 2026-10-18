@@ -16,8 +16,14 @@ Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, cons
 
 ## Pixel / CAPI
 
-- `PageView` ao carregar, `ViewContent` ao clicar em "Iniciar análise gratuita".
-- `Lead` só dispara **após o webhook responder 2xx**, com `eventID` = `event_id` do payload. Use o mesmo `event_id` (e `fbp`/`fbc`) no evento da Conversions API para deduplicar.
+| Evento | Quando | eventID |
+|---|---|---|
+| `PageView` | ao carregar | (padrão do Pixel) |
+| `ViewContent` | clique em "Iniciar análise gratuita" | - |
+| `Diagnostico10`, `Diagnostico25`, `Diagnostico50`, `Diagnostico75` (custom) | primeira vez que a barra de progresso atinge 10/25/50/75% (uma vez cada, mesmo se o usuário voltar). Parâmetro `progresso`. | `<id da visita>_Diagnostico<N>` |
+| `Lead` (padrão) e `LeadDiagnostico` (custom) | só **após o webhook responder 2xx** (dados de contato enviados) | `event_id` do payload (o mesmo nos dois) |
+
+O Meta não aceita "%" no nome do evento, por isso `Diagnostico10` etc. Se não quiser contar `Lead` e `LeadDiagnostico` em dobro, apague a linha `track('Lead', ...)` no script. Para a CAPI, use o mesmo nome e `event_id` de cada evento (e `fbp`/`fbc`) para deduplicar. O percentual é o da barra: com 12 etapas, 10% = 2ª resposta, 25% = 3ª, 50% = 6ª, 75% = 9ª (varia para quem ainda trabalha).
 
 ## Payload (POST JSON)
 
