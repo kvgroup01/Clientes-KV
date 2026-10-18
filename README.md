@@ -7,7 +7,7 @@ Landing page em quiz no formato de conversa (balões de chat com a foto do Dr. M
 | Constante | O que fazer |
 |---|---|
 | `WEBHOOK_URL` | Já configurado: `https://webhook.kvgroupbr.com.br/webhook/trabalhista` (Production URL, POST, resposta imediata). |
-| `WHATSAPP_ESCRITORIO` | Número que enviará a mensagem automática (só dígitos, 55+DDD, ex.: `5592999999999`). Usado no botão "Abrir WhatsApp" da tela final. |
+| `WHATSAPP_ESCRITORIO` | Já configurado: `5592984812939` (+55 92 8481-2939). Usado no botão "Abrir WhatsApp" da tela final. |
 | `PIXEL_ID` | Já configurado com o Pixel `1385665022550986`. Para desativar o Pixel, volte para um valor não numérico. |
 
 Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, constante `AVATAR`) e logo (`logo-dr-marcelo.webp`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
