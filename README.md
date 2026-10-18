@@ -12,7 +12,7 @@ Landing page em quiz no formato de conversa (balões de chat com a foto do Dr. M
 
 Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, constante `AVATAR`) e logo (`logo-dr-marcelo.webp`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
 
-**CORS no n8n (obrigatório; ainda pendente em 18/10/2026):** ao testar o preflight (`OPTIONS` com cabeçalho `Origin`), o webhook respondeu **500 sem `Access-Control-Allow-Origin`**, então o navegador bloqueia o envio até isso ser configurado. o navegador faz um preflight por causa do `Content-Type: application/json`. No nó Webhook, em *Options → Allowed Origins (CORS)*, informe o domínio da landing page (ou `*` para testar).
+**CORS no n8n (obrigatório; liberado e verificado em 18/10/2026):** o preflight `OPTIONS` agora responde 204 com `Access-Control-Allow-Origin`. o navegador faz um preflight por causa do `Content-Type: application/json`. No nó Webhook, em *Options → Allowed Origins (CORS)*, informe o domínio da landing page (ou `*` para testar).
 
 ## Pixel / CAPI
 
