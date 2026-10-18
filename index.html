@@ -238,7 +238,7 @@ const FORM = [
 const $ = id => document.getElementById(id);
 const ans = {};                         // id -> valor | [valores]
 const D = {nome:'', whats:''};
-const G = {cidade:'', estado:'', pais:'', ip:''};   // localização aproximada por IP (preenchida em segundo plano)
+const G = {cidade:'', estado:'', pais:'', pais_codigo:'', ip:''};   // localização aproximada por IP (preenchida em segundo plano)
 let pos = 0, typing = false, done = false, shown = 0;
 let eventId = null;                     // gerado uma única vez por lead (reutilizado nos retries e no Pixel)
 let sending = false;
@@ -256,8 +256,8 @@ let geoP = null;
 function geoLookup(){
   if (geoP) return geoP;
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 4000);
-  geoP = fetch('https://ipwho.is/?fields=success,ip,city,region,country', {signal: ctl.signal})
-    .then(r => r.json()).then(j => { if (j && j.success) Object.assign(G, {cidade:j.city||'', estado:j.region||'', pais:j.country||'', ip:j.ip||''}); })
+  geoP = fetch('https://ipwho.is/?fields=success,ip,city,region,country,country_code', {signal: ctl.signal})
+    .then(r => r.json()).then(j => { if (j && j.success) Object.assign(G, {cidade:j.city||'', estado:j.region||'', pais:j.country||'', pais_codigo:j.country_code||'', ip:j.ip||''}); })
     .catch(() => {}).finally(() => clearTimeout(to));
   return geoP;
 }
@@ -408,7 +408,7 @@ function back(){
 const cookie = n => (document.cookie.match('(?:^|; )' + n + '=([^;]*)') || [])[1] || '';
 function trackingParams(){
   const p = new URLSearchParams(location.search), out = {};
-  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(k => {
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id','fbclid'].forEach(k => {
     let v = p.get(k);
     try { if (v) sessionStorage.setItem(k, v); else v = sessionStorage.getItem(k); } catch(e){}   // preserva se o usuário recarregar
     out[k] = v || '';
@@ -433,13 +433,47 @@ function resumo(nome, qual, resp, cidade){
   if (cidade) lines.push(`Local (por IP): ${cidade}${G.estado ? '/' + G.estado : ''}${G.pais ? ' - ' + G.pais : ''}`);
   return lines.join('\n');
 }
-function buildPayload(){
+/* ===== PAYLOAD PARA A CONVERSIONS API (campo "capi") =====
+   Só é hasheado (SHA-256, minúsculo/sem espaços) o que a Meta exige: ph, fn, ln, country (e em, se houver e-mail).
+   NÃO hasheados: external_id, client_ip_address, client_user_agent, fbc, fbp (a Meta pede esses em texto puro).
+   Campos vazios são omitidos. Se o navegador não tiver crypto.subtle (página fora de HTTPS), capi = null. */
+async function sha256(v){
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+  return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function externalId(){
+  try { let x = localStorage.getItem('kv_xid'); if (!x) { x = uuid(); localStorage.setItem('kv_xid', x); } return x; } catch(e) { return eventId; }
+}
+async function buildCapi(p){
+  if (!(window.crypto && crypto.subtle)) { console.warn('[quiz] sem crypto.subtle: capi omitido'); return null; }
+  const clean = v => (v || '').toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  const parts = p.nome.trim().split(/\s+/);
+  const country = clean(p.pais_codigo) || (p.whatsapp.startsWith('55') ? 'br' : '');   // fallback: DDI do WhatsApp
+  const hashed = {ph: p.whatsapp, fn: clean(parts[0]), ln: parts.length > 1 ? clean(parts[parts.length - 1]) : '', country, em: (p.email || '').trim().toLowerCase()};
+  const ud = {};
+  for (const k of Object.keys(hashed)) if (hashed[k]) ud[k] = [await sha256(hashed[k])];
+  ud.external_id = [externalId()];
+  if (p.ip) ud.client_ip_address = p.ip;
+  ud.client_user_agent = p.user_agent;
+  if (p.fbc) ud.fbc = p.fbc;
+  if (p.fbp) ud.fbp = p.fbp;
+  const cd = {content_name: 'Quiz Trabalhista', content_category: p.classificacao};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id'].forEach(k => { if (p[k]) cd[k] = p[k]; });
+  const time = Math.floor(Date.now() / 1000);
+  // Lead e LeadDiagnostico compartilham o mesmo event_id, igual ao que o Pixel dispara (deduplicação por nome+id)
+  return {data: ['Lead', 'LeadDiagnostico'].map(event_name => ({
+    event_name, event_time: time, event_id: p.event_id, action_source: 'website', event_source_url: p.url,
+    user_data: ud, custom_data: cd
+  }))};
+}
+
+async function buildPayload(){
   const nome = D.nome, cidade = G.cidade;
   const qual = qualificar(ans), resp = respostasLegiveis();
   const t = trackingParams();
   const fbc = cookie('_fbc') || (t.fbclid ? `fb.1.${Date.now()}.${t.fbclid}` : '');
-  return Object.assign({
-    nome, whatsapp: '55' + digits(D.whats), email: '', cidade, estado: G.estado, pais: G.pais, ip: G.ip,   // email mantido vazio por compatibilidade
+  const p = Object.assign({
+    nome, whatsapp: '55' + digits(D.whats), email: '', cidade, estado: G.estado, pais: G.pais, pais_codigo: G.pais_codigo, ip: G.ip,   // email mantido vazio por compatibilidade
     respostas: resp, score: qual.score, classificacao: qual.classificacao, alertas: qual.flags,
     acao_em_andamento: ans.advogado === 'acao_andamento',
     resumo_texto: resumo(nome, qual, resp, cidade)
@@ -448,6 +482,8 @@ function buildPayload(){
     url: location.href, user_agent: navigator.userAgent,
     timestamp: new Date().toISOString(), event_id: eventId
   });
+  p.capi = await buildCapi(p);
+  return p;
 }
 
 /* ===== ENVIO (timeout + retry, sem perder dados) ===== */
@@ -478,7 +514,7 @@ async function submit(e){
   const btn = $('send'); btn.disabled = true; btn.textContent = 'Enviando…'; $('w').setAttribute('aria-busy','true');
   eventId = eventId || uuid();
   await geoLookup();                                   // só após o consentimento
-  const payload = buildPayload();
+  const payload = await buildPayload();
   try {
     if (!webhookOn) throw new Error('WEBHOOK_URL não configurada');
     await post(payload);

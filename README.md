@@ -27,7 +27,7 @@ O Meta não aceita "%" no nome do evento, por isso `Diagnostico10` etc. Se não 
 
 ## Payload (POST JSON)
 
-Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos de topo, todos sempre presentes e em snake_case: `nome`, `whatsapp`, `email` (sempre vazio, mantido por compatibilidade), `cidade`, `estado`, `pais`, `ip` (cidade/estado/país/IP aproximados, obtidos por IP no navegador via ipwho.is; vazios se o serviço falhar ou for bloqueado), `respostas`, `score`, `classificacao`, `alertas`, `acao_em_andamento`, `resumo_texto`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `fbp`, `fbc`, `url`, `user_agent`, `timestamp`, `event_id`. Vazios chegam como `""` (ou `[]` em `alertas`). As chaves internas de `respostas` são os enunciados em português, não snake_case.
+Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos de topo, todos sempre presentes e em snake_case: `nome`, `whatsapp`, `email` (sempre vazio, mantido por compatibilidade), `cidade`, `estado`, `pais`, `pais_codigo`, `ip` (cidade/estado/país/IP aproximados, obtidos por IP no navegador via ipwho.is; vazios se o serviço falhar ou for bloqueado), `respostas`, `score`, `classificacao`, `alertas`, `acao_em_andamento`, `resumo_texto`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `utm_id`, `fbclid`, `fbp`, `fbc`, `url`, `user_agent`, `timestamp`, `event_id`. Vazios chegam como `""` (ou `[]` em `alertas`). As chaves internas de `respostas` são os enunciados em português, não snake_case.
 
 ```json
 {
@@ -37,6 +37,7 @@ Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos 
   "cidade": "Manaus",
   "estado": "Amazonas",
   "pais": "Brasil",
+  "pais_codigo": "BR",
   "ip": "177.1.2.3",
   "respostas": {
     "Situação atual": "Fui demitido(a)",
@@ -68,6 +69,17 @@ Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos 
   "event_id": "35017370-33fb-48d3-8d9b-31d21d3f60bb"
 }
 ```
+
+### Campo `capi` (dados hasheados para a Conversions API)
+
+Todo POST traz, além dos dados limpos acima, o campo **`capi`** já no formato do corpo da CAPI (`{ "data": [ ... ] }`). No n8n, envie `{{ $json.body.capi }}` direto para `POST https://graph.facebook.com/v21.0/<PIXEL_ID>/events?access_token=<TOKEN>`.
+
+- `data` tem 2 eventos, `Lead` e `LeadDiagnostico`, ambos com o mesmo `event_id` do payload (o Pixel dispara os dois; a deduplicação é por nome + id). Apague um deles do array se não usar os dois.
+- **Hasheados (SHA-256, minúsculo, sem espaços/pontuação):** `ph` (telefone com 55), `fn` (primeiro nome), `ln` (último nome), `country` (`br`, do IP ou do DDI 55 como reserva) e `em` (só se houver e-mail; hoje não há).
+- **Em texto puro, como a Meta pede:** `external_id` (id persistente do visitante no navegador), `client_ip_address`, `client_user_agent`, `fbc`, `fbp`.
+- `event_time` em segundos (Unix), `action_source: "website"`, `event_source_url` e `custom_data` com `content_name`, `content_category` (classificação) e UTMs. Campos vazios são omitidos.
+- Se a página for aberta fora de HTTPS (sem `crypto.subtle`), `capi` vem `null` e os dados limpos seguem normalmente.
+- O IP do navegador vem do ipwho.is; no n8n, prefira o IP real da requisição (`$json.headers['x-forwarded-for']`) para `client_ip_address` se quiser mais precisão.
 
 Observações:
 - `respostas` usa os enunciados curtos como chave; perguntas puladas (quem "ainda trabalha" não vê *tempo desde a saída* nem *rescisão*) não aparecem.
