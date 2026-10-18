@@ -47,7 +47,7 @@ Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos 
   "classificacao": "quente",
   "alertas": [],
   "acao_em_andamento": false,
-  "resumo_texto": "Novo lead - análise trabalhista\nNome: Maria da Silva\nClassificação: QUENTE (score 81/100)\nSituação atual: Fui demitido(a)\nTempo desde a saída da empresa: Há menos de 6 meses\nTipo de vínculo: Carteira assinada (CLT)\nTempo de trabalho na empresa: De 1 a 3 anos\nSituações ocorridas: Horas extras sem pagamento; FGTS não depositado; Assédio moral\nFaixa salarial: De R$ 2.000 a R$ 4.000\nRescisão e documentos assinados: Recebi valores, mas não entendi o cálculo\nAdvogado ou ação anterior: Não, ainda não\nDocumentos disponíveis: Carteira de trabalho; Holerites / contracheques; Termo de rescisão (TRCT)\nPreferência de contato: O quanto antes\nCidade/UF: São Paulo/SP",
+  "resumo_texto": "Novo lead - análise trabalhista\nNome: Maria da Silva\nClassificação: QUENTE (score 81/100)\nSituação atual: Fui demitido(a)\nTempo desde a saída da empresa: Há menos de 6 meses\nTipo de vínculo: Carteira assinada (CLT)\nTempo de trabalho na empresa: De 1 a 3 anos\nSituações ocorridas: Horas extras sem pagamento; FGTS não depositado; Assédio moral\nFaixa salarial: De R$ 2.000 a R$ 4.000\nRescisão e documentos assinados: Recebi valores, mas não entendi o cálculo\nAdvogado ou ação anterior: Não, ainda não\nDocumentos disponíveis: Carteira de trabalho; Holerites / contracheques; Termo de rescisão (TRCT)\nLocal (por IP): Manaus/Amazonas - Brasil",
   "utm_source": "facebook",
   "utm_medium": "",
   "utm_campaign": "cmp",
