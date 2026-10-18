@@ -20,6 +20,8 @@ Outros pontos a trocar: foto (`<img id="foto">`, `src`), nome/OAB (`OAB/UF 000.0
 
 ## Payload (POST JSON)
 
+Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos de topo, todos sempre presentes e em snake_case: `nome`, `whatsapp`, `email`, `cidade`, `respostas`, `score`, `classificacao`, `alertas`, `acao_em_andamento`, `resumo_texto`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `fbp`, `fbc`, `url`, `user_agent`, `timestamp`, `event_id`. Vazios chegam como `""` (ou `[]` em `alertas`). As chaves internas de `respostas` são os enunciados em português, não snake_case.
+
 ```json
 {
   "nome": "Maria da Silva",
@@ -28,30 +30,33 @@ Outros pontos a trocar: foto (`<img id="foto">`, `src`), nome/OAB (`OAB/UF 000.0
   "cidade": "São Paulo/SP",
   "respostas": {
     "Situação atual": "Fui demitido(a)",
-    "Tempo desde a saída da empresa": "Entre 6 meses e 1 ano",
+    "Tempo desde a saída da empresa": "Há menos de 6 meses",
     "Tipo de vínculo": "Carteira assinada (CLT)",
     "Tempo de trabalho na empresa": "De 1 a 3 anos",
-    "Situações ocorridas": ["Horas extras sem pagamento", "FGTS não depositado"],
+    "Situações ocorridas": ["Horas extras sem pagamento", "FGTS não depositado", "Assédio moral"],
     "Faixa salarial": "De R$ 2.000 a R$ 4.000",
     "Rescisão e documentos assinados": "Recebi valores, mas não entendi o cálculo",
     "Advogado ou ação anterior": "Não, ainda não",
-    "Documentos disponíveis": ["Carteira de trabalho", "Holerites / contracheques"],
+    "Documentos disponíveis": ["Carteira de trabalho", "Holerites / contracheques", "Termo de rescisão (TRCT)"],
     "Preferência de contato": "O quanto antes"
   },
-  "score": 79,
+  "score": 81,
   "classificacao": "quente",
   "alertas": [],
   "acao_em_andamento": false,
-  "resumo_texto": "Novo lead - análise trabalhista\nNome: Maria da Silva\nClassificação: QUENTE (score 79/100)\n...",
-  "utm_source": "facebook", "utm_medium": "paid", "utm_campaign": "lead-trabalhista",
-  "utm_content": "video01", "utm_term": "",
-  "fbclid": "IwAR...",
-  "fbp": "fb.1.1700000000000.123456789",
-  "fbc": "fb.1.1700000000000.IwAR...",
-  "url": "https://seudominio.com.br/?utm_source=facebook",
-  "user_agent": "Mozilla/5.0 ...",
-  "timestamp": "2026-10-18T15:04:05.123Z",
-  "event_id": "b1f5c0e2-8c1a-4c55-9a43-6d1f0f6a7c11"
+  "resumo_texto": "Novo lead - análise trabalhista\nNome: Maria da Silva\nClassificação: QUENTE (score 81/100)\nSituação atual: Fui demitido(a)\nTempo desde a saída da empresa: Há menos de 6 meses\nTipo de vínculo: Carteira assinada (CLT)\nTempo de trabalho na empresa: De 1 a 3 anos\nSituações ocorridas: Horas extras sem pagamento; FGTS não depositado; Assédio moral\nFaixa salarial: De R$ 2.000 a R$ 4.000\nRescisão e documentos assinados: Recebi valores, mas não entendi o cálculo\nAdvogado ou ação anterior: Não, ainda não\nDocumentos disponíveis: Carteira de trabalho; Holerites / contracheques; Termo de rescisão (TRCT)\nPreferência de contato: O quanto antes\nCidade/UF: São Paulo/SP",
+  "utm_source": "facebook",
+  "utm_medium": "",
+  "utm_campaign": "cmp",
+  "utm_content": "",
+  "utm_term": "",
+  "fbclid": "ABC123",
+  "fbp": "",
+  "fbc": "fb.1.1792340463208.ABC123",
+  "url": "http://localhost:8765/?utm_source=facebook&utm_campaign=cmp&fbclid=ABC123",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "timestamp": "2026-10-18T16:21:03.209Z",
+  "event_id": "35017370-33fb-48d3-8d9b-31d21d3f60bb"
 }
 ```
 
