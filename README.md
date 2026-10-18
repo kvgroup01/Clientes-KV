@@ -6,13 +6,13 @@ Landing page em quiz no formato de conversa (balões de chat com a foto do Dr. M
 
 | Constante | O que fazer |
 |---|---|
-| `WEBHOOK_URL` | Trocar `COLE_AQUI_A_URL_DO_WEBHOOK_N8N` pela URL de produção do nó **Webhook** do n8n (método POST). Se não for uma URL `http(s)`, o envio falha com mensagem amigável (nenhum lead é "engolido" silenciosamente). |
+| `WEBHOOK_URL` | Já configurado: `https://webhook.kvgroupbr.com.br/webhook/trabalhista` (Production URL, POST, resposta imediata). |
 | `WHATSAPP_ESCRITORIO` | Número que enviará a mensagem automática (só dígitos, 55+DDD, ex.: `5592999999999`). Usado no botão "Abrir WhatsApp" da tela final. |
 | `PIXEL_ID` | Já configurado com o Pixel `1385665022550986`. Para desativar o Pixel, volte para um valor não numérico. |
 
 Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, constante `AVATAR`) e logo (`logo-dr-marcelo.webp`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
 
-**CORS no n8n:** o navegador faz um preflight por causa do `Content-Type: application/json`. No nó Webhook, em *Options → Allowed Origins (CORS)*, informe o domínio da landing page (ou `*` para testar).
+**CORS no n8n (obrigatório; ainda pendente em 18/10/2026):** ao testar o preflight (`OPTIONS` com cabeçalho `Origin`), o webhook respondeu **500 sem `Access-Control-Allow-Origin`**, então o navegador bloqueia o envio até isso ser configurado. o navegador faz um preflight por causa do `Content-Type: application/json`. No nó Webhook, em *Options → Allowed Origins (CORS)*, informe o domínio da landing page (ou `*` para testar).
 
 ## Pixel / CAPI
 
