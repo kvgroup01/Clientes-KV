@@ -7,7 +7,7 @@
 <meta name="description" content="Saiu da empresa sem entender o que recebeu? Responda um breve questionário e receba uma análise informativa do seu caso. Dr. Marcelo Melo, advogado trabalhista.">
 <!-- noindex: remova esta linha se quiser que a página apareça no Google -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0c1a33">
+<meta name="theme-color" content="#faf9f6">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Saiu da empresa sem entender o que recebeu?">
@@ -16,213 +16,107 @@
 <meta property="og:image" content="https://SEU-DOMINIO.com.br/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0c1a33; --navy-2:#15294d; --gold:#b8935a; --gold-d:#8a6a35; --gold-l:#d8bd8c;
-  --ivory:#f7f3ea; --paper:#fffdf8; --ink:#1b2438; --muted:#586179; --line:#e1d9c6;
-  --err:#a1261f;
-  --serif:'Fraunces',Georgia,'Times New Roman',serif;
-  --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --bg:#faf9f6; --ink:#0e0f11; --muted:#6b6a64; --bot:#f3f1ee; --tan:#c9b79c; --gold:#b8935a; --gold-d:#8a6a35;
+  --line:#e6e1d8; --seg:#e6e3dc; --err:#a1261f;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--ivory);line-height:1.55;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
-h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0;letter-spacing:-.01em}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 p{margin:0}
-:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* topo */
-.top{background:var(--navy);color:var(--ivory);padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--gold)}
-.top .mark{font-family:var(--serif);font-size:1.05rem;letter-spacing:.02em}
-.top .mark small{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-top:1px}
-.prog{background:var(--paper);border-bottom:1px solid var(--line);padding:12px 20px 10px;display:none}
-.prog.on{display:block}
-.prog-in{max-width:640px;margin:0 auto}
-.prog-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:8px}
-.bar{height:6px;border-radius:99px;background:#ebe4d3;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold-d),var(--gold));border-radius:99px;transition:width .35s ease}
-.back{background:none;border:0;color:var(--navy-2);font:inherit;font-size:.9rem;font-weight:500;padding:8px 10px;margin:-8px -10px;cursor:pointer;border-radius:8px;min-height:44px}
-.back:hover{text-decoration:underline}
+/* topo: progresso em segmentos */
+.hdr{position:sticky;top:0;z-index:5;background:rgba(250,249,246,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hdr-in{max-width:640px;margin:0 auto;padding:16px 16px 14px;display:flex;align-items:center;gap:16px}
+.segs{flex:1;display:flex;gap:6px}
+.segs i{flex:1;height:4px;border-radius:99px;background:var(--seg);transition:background .3s}
+.segs i.on{background:var(--tan)}
+.count{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.count b{font-size:1.35rem;color:var(--ink);font-weight:700;margin-right:3px}
 
-main{flex:1;display:flex;flex-direction:column}
-.screen{display:none;flex:1}
-.screen.on{display:flex;flex-direction:column;animation:in .38s ease both}
-@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+main{flex:1;width:100%;max-width:640px;margin:0 auto;padding:8px 16px 40px}
+.logo{display:block;width:150px;height:auto;margin:20px auto 18px}
+#chat{display:flex;flex-direction:column;gap:12px}
 
-/* hero */
-.hero{background:var(--navy);color:var(--ivory);flex:1;display:flex;align-items:center;padding:36px 22px 44px;background-image:radial-gradient(900px 400px at 85% -10%,rgba(184,147,90,.18),transparent 60%)}
-.hero-in{max-width:980px;margin:0 auto;width:100%;display:grid;gap:30px;align-items:center}
-.eyebrow{display:inline-block;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);border-bottom:1px solid var(--gold);padding-bottom:6px;margin-bottom:18px}
-.hero h1{font-size:clamp(1.95rem,6.4vw,3.1rem);margin-bottom:16px}
-.hero h1 em{font-style:italic;color:var(--gold-l)}
-.hero p.sub{font-size:1.06rem;color:#d9dfec;max-width:520px;margin-bottom:26px}
-.hero p.sub strong{color:#fff;font-weight:600}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:0 30px;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font:600 1.05rem var(--sans);cursor:pointer;transition:transform .15s,background .15s;box-shadow:0 8px 22px -10px rgba(0,0,0,.5);width:100%;max-width:420px}
-.btn:hover{background:var(--gold-l)}
-.btn:active{transform:translateY(1px)}
-.btn[disabled]{opacity:.65;cursor:not-allowed}
-.btn.dark{background:var(--navy);color:var(--ivory)}
-.btn.dark:hover{background:var(--navy-2)}
-.meta{margin-top:14px;font-size:.88rem;color:var(--gold-l)}
-.who{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;order:-1}
-.photo{width:min(30vw,130px);aspect-ratio:4/5;border-radius:140px 140px 18px 18px;border:2px solid var(--gold);padding:7px;background:var(--navy-2)}
-.photo img{width:100%;height:100%;object-fit:cover;border-radius:134px 134px 12px 12px;display:block;background:#243a63}
-.who b{font-family:var(--serif);font-size:1.25rem;font-weight:600;display:block}
-.who span{font-size:.85rem;color:var(--gold-l);letter-spacing:.04em}
-.hero small.legal{display:block;margin-top:22px;font-size:.78rem;color:#98a3bd;max-width:520px}
-@media(min-width:820px){
-  .photo{width:250px}
-  .hero-in{grid-template-columns:1.25fr .75fr;gap:56px}
-  .who{order:0}
-}
+/* balões */
+.m{display:flex;align-items:flex-end;gap:10px;scroll-margin-top:84px}
+.m.me{justify-content:flex-end}
+.av{flex:none;width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--bot)}
+.b{max-width:calc(100% - 52px);padding:14px 18px;border-radius:20px;font-size:1.06rem;line-height:1.5}
+.bot .b{background:var(--bot);border-bottom-left-radius:8px;margin-right:auto}
+.me .b{background:var(--tan);font-weight:600;border-bottom-right-radius:8px;max-width:85%}
+.b small{display:block;margin-top:6px;color:var(--muted);font-size:.9rem}
+.pop{animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.typing{display:flex;gap:5px;padding:18px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#a9a69d;animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 
-/* quiz */
-.card{max-width:640px;width:100%;margin:0 auto;padding:28px 20px 40px}
-.q-n{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-d);margin-bottom:10px;font-weight:600}
-.card h2{font-size:clamp(1.45rem,4.6vw,1.95rem);margin-bottom:8px;outline:none}
-.hint{color:var(--muted);font-size:.95rem;margin-top:8px}
-.opts{display:grid;gap:11px;margin-top:20px}
-.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;min-height:62px;padding:14px 16px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;font:500 1rem var(--sans);color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .15s,box-shadow .15s}
-.opt:hover{border-color:var(--gold);box-shadow:0 6px 18px -12px rgba(12,26,51,.5)}
+/* respostas */
+.w{display:grid;gap:10px;margin-top:2px;outline:none}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:13px 16px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;font:600 1rem var(--sans);color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
+.opt:hover{border-color:var(--gold)}
 .opt:active{transform:scale(.99)}
-.opt .dot{flex:none;width:24px;height:24px;border:1.5px solid #b9ae94;border-radius:50%;display:grid;place-items:center;transition:.15s}
-.multi .opt .dot{border-radius:7px}
-.opt[aria-pressed=true]{border-color:var(--navy);background:#f1ede1}
-.opt[aria-pressed=true] .dot{background:var(--navy);border-color:var(--navy)}
+.opt .dot{flex:none;width:22px;height:22px;border:1.5px solid #b9b3a4;border-radius:50%;display:grid;place-items:center}
+.multi .opt .dot{border-radius:6px}
+.opt[aria-pressed=true]{background:#f1e9d8;border-color:var(--gold)}
+.opt[aria-pressed=true] .dot{background:var(--ink);border-color:var(--ink)}
 .opt[aria-pressed=true] .dot::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.next{margin-top:22px}
-
-/* formulário */
-form{margin-top:22px;display:grid;gap:16px}
-label.f{display:grid;gap:6px;font-weight:600;font-size:.92rem}
-label.f small{font-weight:400;color:var(--muted)}
-input[type=text],input[type=tel],input[type=email],select{width:100%;min-height:54px;padding:0 14px;border:1.5px solid #cfc6b0;border-radius:12px;background:#fff;font:400 1rem var(--sans);color:var(--ink)}
-input:focus,select:focus{outline:3px solid var(--gold);outline-offset:1px;border-color:var(--navy)}
+.btn{min-height:56px;padding:0 26px;border:0;border-radius:14px;background:var(--gold);color:#1a1305;font:700 1.02rem var(--sans);cursor:pointer;transition:background .15s}
+.btn:hover{background:#c7a56c}
+.btn[disabled]{opacity:.65;cursor:not-allowed}
+.lbl{text-align:center;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-top:4px}
+.ask{position:relative}
+input[type=text],input[type=tel],input[type=email]{width:100%;min-height:58px;padding:0 64px 0 18px;border:1px solid var(--tan);border-radius:16px;background:#fff;font:400 1.05rem var(--sans);color:var(--ink)}
+input.plain{padding-right:18px;border-radius:14px}
+input:focus{outline:3px solid var(--gold);outline-offset:1px}
 input[aria-invalid=true]{border-color:var(--err)}
-.row{display:grid;grid-template-columns:1fr 96px;gap:12px}
-.err{color:var(--err);font-size:.85rem;font-weight:500}
-.consent{display:flex;gap:12px;align-items:flex-start;font-size:.88rem;color:var(--muted);line-height:1.5}
-.consent input{flex:none;width:24px;height:24px;margin-top:2px;accent-color:var(--navy)}
-.consent a{color:var(--navy-2)}
-.banner{padding:12px 14px;border-radius:10px;font-size:.92rem;background:#fbeceb;color:var(--err);border:1px solid #efc3c0}
-.banner[hidden],.deadline[hidden]{display:none}
-.deadline{background:#fbf6e8;border:1px solid var(--gold-l);border-radius:12px;padding:14px 16px;font-size:.92rem;margin-top:18px}
+.go{position:absolute;right:8px;top:8px;width:42px;height:42px;border:0;border-radius:50%;background:var(--gold);color:#1a1305;font-size:1.2rem;font-weight:700;cursor:pointer}
+.go:hover{background:#c7a56c}
+.err{color:var(--err);font-size:.88rem;font-weight:500}
+.link{background:none;border:0;color:var(--gold-d);font:600 .92rem var(--sans);text-decoration:underline;cursor:pointer;padding:10px;min-height:44px}
+.back{justify-self:start;color:var(--muted);font-weight:500;text-decoration:none;padding:8px 4px}
+.back:hover{text-decoration:underline}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:.9rem;color:#4a4943;line-height:1.5;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.consent input{flex:none;width:24px;height:24px;margin-top:1px;accent-color:#1a1712}
+.consent a{color:var(--gold-d)}
+.banner{padding:12px 14px;border-radius:12px;font-size:.92rem;background:#fbeceb;color:var(--err);border:1px solid #efc3c0}
 
-/* obrigado */
-.ty{text-align:center}
-.ty .seal{width:64px;height:64px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:var(--navy);color:var(--gold-l);font-size:1.7rem}
-.ty p{color:var(--muted);margin-top:14px}
-.ty p.strong{color:var(--ink)}
-
-footer{background:var(--navy);color:#aeb8cf;padding:26px 22px calc(26px + env(safe-area-inset-bottom));font-size:.8rem;text-align:center}
-footer .in{max-width:720px;margin:0 auto}
-footer b{color:var(--ivory);font-weight:600}
-footer a{color:var(--gold-l)}
-footer p+p{margin-top:8px}
+footer{max-width:640px;width:100%;margin:0 auto;padding:8px 20px calc(28px + env(safe-area-inset-bottom));font-size:.78rem;color:var(--muted);text-align:center;border-top:1px solid var(--line);padding-top:18px}
+footer b{color:#3b3a36}
+footer a{color:var(--gold-d)}
+footer p+p{margin-top:6px}
+@media(min-width:700px){.b{font-size:1.1rem}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="mark">Marcelo Melo<small>Advocacia Trabalhista</small></div>
-</header>
-
-<div class="prog" id="prog">
-  <div class="prog-in">
-    <div class="prog-row">
-      <button type="button" class="back" id="back">← Voltar</button>
-      <span id="progTxt" aria-live="polite">Pergunta 1 de 10</span>
-    </div>
-    <div class="bar" role="progressbar" aria-label="Progresso da análise" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><i id="barFill"></i></div>
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="segs" id="segs" role="progressbar" aria-label="Progresso da análise" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+    <div class="count" aria-hidden="true"><b id="cnt">0</b>de <span id="tot">9</span></div>
   </div>
-</div>
+</header>
+<p class="sr" id="sr" aria-live="polite"></p>
 
 <main>
-  <!-- 1. HERO -->
-  <section class="screen on" id="s-hero" aria-labelledby="h-hero">
-    <div class="hero">
-      <div class="hero-in">
-        <div>
-          <span class="eyebrow">Direito do Trabalho</span>
-          <h1 id="h-hero">Saiu da empresa sem <em>entender o que recebeu?</em></h1>
-          <p class="sub">O prazo para buscar direitos trabalhistas, em regra, é de <strong>2 anos após a saída da empresa</strong>. Responda a algumas perguntas e receba uma análise informativa do seu caso.</p>
-          <button class="btn" id="start" type="button">Iniciar análise gratuita</button>
-          <p class="meta">⏱ Leva menos de 1 minuto</p>
-          <small class="legal">Análise de caráter informativo. Não há garantia de resultado, e cada caso depende de suas circunstâncias e de provas.</small>
-        </div>
-        <div class="who">
-          <!-- FOTO: troque o src abaixo pelo arquivo da foto (ex.: "foto-dr-marcelo.jpg"). Proporção ideal 4:5. -->
-          <div class="photo"><img id="foto" alt="Foto do Dr. Marcelo Melo" width="250" height="312" decoding="async" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 250'%3E%3Crect width='200' height='250' fill='%23243a63'/%3E%3Ccircle cx='100' cy='95' r='38' fill='%2338558a'/%3E%3Cpath d='M30 250c0-52 31-82 70-82s70 30 70 82z' fill='%2338558a'/%3E%3Ctext x='100' y='238' font-size='11' fill='%23d8bd8c' text-anchor='middle' font-family='sans-serif'%3EFOTO DO ADVOGADO%3C/text%3E%3C/svg%3E"></div>
-          <div><b>Dr. Marcelo Melo</b><span>Advogado trabalhista · OAB/UF 000.000</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. PERGUNTAS (renderizadas por JS) -->
-  <section class="screen" id="s-q"><div class="card" id="qCard"></div></section>
-
-  <!-- 3. DADOS -->
-  <section class="screen" id="s-form" aria-labelledby="h-form">
-    <div class="card">
-      <p class="q-n">Última etapa</p>
-      <h2 id="h-form" tabindex="-1">Para onde enviamos a sua análise?</h2>
-      <p class="hint">Informe seus dados para que a equipe do Dr. Marcelo entre em contato pelo WhatsApp.</p>
-      <div class="deadline" id="deadlineNote" hidden></div>
-      <form id="form" novalidate>
-        <label class="f" for="nome">Nome completo
-          <input type="text" id="nome" name="nome" autocomplete="name" required aria-describedby="e-nome">
-          <span class="err" id="e-nome" role="alert"></span>
-        </label>
-        <label class="f" for="whats">WhatsApp com DDD
-          <input type="tel" id="whats" name="whats" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="15" required aria-describedby="e-whats">
-          <span class="err" id="e-whats" role="alert"></span>
-        </label>
-        <label class="f" for="email">E-mail <small>(opcional)</small>
-          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="e-email">
-          <span class="err" id="e-email" role="alert"></span>
-        </label>
-        <div class="row">
-          <label class="f" for="cidade">Cidade <small>(opcional)</small>
-            <input type="text" id="cidade" name="cidade" autocomplete="address-level2">
-          </label>
-          <label class="f" for="uf">UF
-            <select id="uf" name="uf" autocomplete="address-level1"><option value="">—</option></select>
-          </label>
-        </div>
-        <div>
-          <label class="consent" for="lgpd">
-            <input type="checkbox" id="lgpd" aria-describedby="e-lgpd">
-            <span>Li e concordo com o tratamento dos meus dados pessoais para fins de análise do meu caso e autorizo o contato por <b>WhatsApp</b> pelo Dr. Marcelo Melo ou sua equipe, conforme a <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a> (LGPD).</span>
-          </label>
-          <span class="err" id="e-lgpd" role="alert"></span>
-        </div>
-        <div class="banner" id="netErr" role="alert" hidden></div>
-        <button class="btn dark" id="send" type="submit">Receber minha análise</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- 4. OBRIGADO -->
-  <section class="screen" id="s-ty" aria-labelledby="h-ty">
-    <div class="card ty">
-      <div class="seal" aria-hidden="true">✓</div>
-      <h2 id="h-ty" tabindex="-1">Recebemos suas informações</h2>
-      <p class="strong" id="tyMain"></p>
-      <p id="tyNote"></p>
-      <p>Mantenha o WhatsApp à mão e, se tiver, separe sua carteira de trabalho, holerites e termo de rescisão.</p>
-    </div>
-  </section>
+  <!-- logo do escritório (arquivo logo-dr-marcelo.webp) -->
+  <img class="logo" src="logo-dr-marcelo.webp" alt="Dr. Marcelo Melo, Advogado" width="150" height="72">
+  <div id="chat"></div>
 </main>
 
 <footer>
-  <div class="in">
-    <p><b>Esta análise tem caráter meramente informativo e não substitui consulta jurídica.</b></p>
-    <p>Dr. Marcelo Melo · Advogado · OAB/UF 000.000</p>
-    <p>O conteúdo desta página segue o Provimento nº 205/2021 da OAB e não representa promessa de resultado. <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a></p>
-  </div>
+  <p><b>Esta análise tem caráter meramente informativo e não substitui consulta jurídica.</b></p>
+  <p>Dr. Marcelo Melo · Advogado · OAB/UF 000.000</p>
+  <p>Conteúdo em conformidade com o Provimento nº 205/2021 da OAB, sem promessa de resultado. <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a></p>
 </footer>
 
 <script>
@@ -234,6 +128,8 @@ const WEBHOOK_URL = 'COLE_AQUI_A_URL_DO_WEBHOOK_N8N';
 const PIXEL_ID    = 'COLE_AQUI_O_PIXEL_ID';   // só números; deixe como está para desativar o Pixel
 const TIMEOUT_MS  = 10000;                     // tempo máximo por tentativa de envio
 const TENTATIVAS  = 3;                         // tentativas automáticas antes de mostrar erro
+const AVATAR      = 'avatar-dr-marcelo.webp';  // foto redonda do Dr. Marcelo nos balões (troque o arquivo para trocar a foto)
+const TYPING_MS   = 550;                       // duração do "digitando…" entre mensagens
 
 const pixelOn   = /^\d{8,20}$/.test(PIXEL_ID);
 const webhookOn = /^https?:\/\//.test(WEBHOOK_URL);
@@ -314,98 +210,30 @@ function qualificar(a){
   return {score:s, classificacao, flags};
 }
 
-/* ===== ESTADO / NAVEGAÇÃO ===== */
+/* ===== FLUXO (estilo conversa) =====
+   steps = [início, perguntas aplicáveis..., nome, whatsapp, extras (e-mail/cidade), consentimento]
+   pos = quantas etapas já foram respondidas. */
+const INTRO = [
+  'Olá! Esta é a análise informativa do escritório do Dr. Marcelo Melo, advogado trabalhista.',
+  'Se você saiu da empresa sem entender o que recebeu, ela é para você. O prazo para buscar direitos trabalhistas, em regra, é de <b>2 anos após a saída</b>. São algumas perguntas rápidas, leva menos de 1 minuto.'
+];
+const FORM = [
+  {type:'nome',   say:'Perfeito. Para começar, qual é o seu nome completo?'},
+  {type:'whats',  say:'Qual é o seu WhatsApp com DDD? É por ele que a equipe do Dr. Marcelo fará o contato.'},
+  {type:'extras', say:'Se quiser, informe seu e-mail e sua cidade. Ambos são opcionais.'},
+  {type:'consent'}
+];
 const $ = id => document.getElementById(id);
-const ans = {};          // id -> valor | [valores]
-let hist = [];           // pilha de índices visitados (botão voltar)
-let cur = -1;
-let eventId = null;      // gerado uma única vez por lead (reutilizado nos retries e no Pixel)
-let sending = false, sent = false;
+const ans = {};                         // id -> valor | [valores]
+const D = {nome:'', whats:'', email:'', cidade:''};
+let pos = 0, typing = false, done = false, shown = 0;
+let eventId = null;                     // gerado uma única vez por lead (reutilizado nos retries e no Pixel)
+let sending = false;
 
 const applicable = () => Q.filter(q => !(q.skip && q.skip(ans)));
-const nextIdx = i => { for (let j = i + 1; j < Q.length; j++) if (!(Q[j].skip && Q[j].skip(ans))) return j; return -1; };
-
-function show(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
-  $('prog').classList.toggle('on', id === 's-q' || id === 's-form');
-  window.scrollTo(0, 0);
-}
-const focusTitle = el => { el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); };
-
-function setProgress(pos, total, label){
-  const pct = Math.round(pos / total * 100);
-  $('bar').setAttribute('aria-valuenow', pct);
-  $('barFill').style.width = pct + '%';
-  $('progTxt').textContent = label;
-}
-
-function renderQ(i){
-  cur = i;
-  const q = Q[i], list = applicable(), pos = list.indexOf(q) + 1, total = list.length;
-  setProgress(pos - 1, total + 1, `Pergunta ${pos} de ${total}`);
-  const card = $('qCard');
-  const sel = ans[q.id] || (q.multi ? [] : null);
-  card.innerHTML = `<p class="q-n">Pergunta ${pos} de ${total}</p>
-    <h2 id="qt">${q.title}</h2>${q.hint ? `<p class="hint">${q.hint}</p>` : ''}
-    <div class="opts ${q.multi ? 'multi' : ''}" role="group" aria-labelledby="qt"></div>
-    ${q.multi ? '<button type="button" class="btn dark next" id="nx">Continuar</button><p class="err" id="nxe" role="alert"></p>' : ''}`;
-  const box = card.querySelector('.opts');
-  q.opts.forEach(([v, l]) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'opt'; b.dataset.v = v;
-    b.setAttribute('aria-pressed', q.multi ? sel.includes(v) : sel === v);
-    b.innerHTML = `<span class="dot" aria-hidden="true"></span><span>${l}</span>`;
-    b.onclick = () => pick(q, v, box, b);
-    box.appendChild(b);
-  });
-  if (q.multi) $('nx').onclick = () => {
-    if (!ans[q.id] || !ans[q.id].length) { $('nxe').textContent = 'Selecione ao menos uma opção.'; return; }
-    advance(i);
-  };
-  show('s-q');
-  focusTitle($('qt'));
-}
-
-function pick(q, v, box, btn){
-  if (!q.multi) {
-    ans[q.id] = v;
-    Q.forEach(x => { if (x.skip && x.skip(ans)) delete ans[x.id]; });   // descarta respostas de perguntas que viraram "puladas"
-    box.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === btn));
-    const at = cur;
-    setTimeout(() => advance(at), 260);   // avanço automático
-    return;
-  }
-  let a = (ans[q.id] || []).filter(x => x !== q.exclusive);
-  if (v === q.exclusive) a = (ans[q.id] || []).includes(v) ? [] : [v];
-  else a = a.includes(v) ? a.filter(x => x !== v) : a.concat(v);
-  ans[q.id] = a;
-  box.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', a.includes(b.dataset.v)));
-  $('nxe').textContent = '';
-}
-
-function advance(i){
-  if (cur !== i) return;                   // ignora cliques duplicados / avanço atrasado
-  const n = nextIdx(i);
-  hist.push(i);
-  if (n === -1) return renderForm();
-  renderQ(n);
-}
-
-function goBack(){
-  if (!hist.length) { show('s-hero'); return; }
-  renderQ(hist.pop());
-}
-
-function renderForm(){
-  cur = Q.length;
-  const total = applicable().length;
-  setProgress(total, total + 1, 'Última etapa');
-  const d = $('deadlineNote');
-  d.hidden = ans.tempo_saida !== 'mais2a';
-  d.textContent = 'Pelas suas respostas, a saída ocorreu há mais de 2 anos, o que em regra ultrapassa o prazo para ação trabalhista. Ainda assim, a equipe poderá analisar se há alguma exceção aplicável ao seu caso, sem garantia de resultado.';
-  show('s-form');
-  focusTitle($('h-form'));
-}
+const steps = () => [{type:'start'}].concat(applicable().map(q => ({type:'q', q})), FORM);
+const sayOf = s => s.type === 'q' ? s.q.title
+  : s.type === 'consent' ? 'Última etapa. Para enviar sua análise, preciso do seu consentimento.' : s.say;
 
 /* ===== MÁSCARA / VALIDAÇÃO ===== */
 const digits = s => s.replace(/\D/g, '');
@@ -417,27 +245,144 @@ function maskPhone(v){
 }
 // 11 dígitos: DDD (11-99, sem 0) + celular iniciando em 9; rejeita sequências repetidas (ex.: 999999999)
 const phoneOk = v => { const d = digits(v); return /^[1-9][1-9]9\d{8}$/.test(d) && !/^(\d)\1+$/.test(d.slice(2)); };
-const UFS = 'AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO'.split(' ');
-$('uf').insertAdjacentHTML('beforeend', UFS.map(u => `<option>${u}</option>`).join(''));
-$('whats').addEventListener('input', e => { e.target.value = maskPhone(e.target.value); });
+const mailOk = v => !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const nameOk = v => v.split(/\s+/).length >= 2 && v.length >= 5;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-function fieldErr(id, msg){
-  $('e-' + id).textContent = msg || '';
-  $(id).setAttribute('aria-invalid', msg ? 'true' : 'false');
-  return !msg;
+/* ===== RENDER ===== */
+function display(s){
+  if (s.type === 'start') return 'Iniciar análise gratuita';
+  if (s.type === 'q') { const v = ans[s.q.id]; return Array.isArray(v) ? v.map(x => R[s.q.id][x]).join(', ') : R[s.q.id][v]; }
+  if (s.type === 'nome') return D.nome;
+  if (s.type === 'whats') return D.whats;
+  if (s.type === 'extras') return [D.email, D.cidade].filter(Boolean).join(' · ') || 'Prefiro não informar';
+  return 'Concordo e autorizo o contato por WhatsApp';
 }
-function validate(){
-  const nome = $('nome').value.trim();
-  const mail = $('email').value.trim();
-  const ok = {
-    nome: fieldErr('nome', nome.split(/\s+/).length >= 2 && nome.length >= 5 ? '' : 'Informe seu nome completo.'),
-    whats: fieldErr('whats', phoneOk($('whats').value) ? '' : 'Informe um WhatsApp válido com DDD. Ex.: (11) 91234-5678.'),
-    email: fieldErr('email', !mail || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail) ? '' : 'E-mail inválido.'),
-    lgpd: fieldErr('lgpd', $('lgpd').checked ? '' : 'Para continuar, é necessário concordar com o tratamento dos dados e o contato por WhatsApp.')
-  };
-  const bad = Object.keys(ok).find(k => !ok[k]);
-  if (bad) $(bad).focus();
-  return !bad;
+
+function render(){
+  const flow = steps(), chat = $('chat');
+  let idx = 0, html = '', lastBot = -1;
+  const row = (cls, inner) => { const pop = idx++ >= shown ? ' pop' : ''; return `<div class="m ${cls}${pop}">${inner}</div>`; };
+  const bot = (t, id) => { lastBot = idx; return row('bot', `<img class="av" src="${AVATAR}" alt="" width="40" height="40"><div class="b"${id ? ` id="${id}"` : ''}>${t}</div>`); };
+  const me = t => row('me', `<div class="b">${esc(t)}</div>`);
+
+  for (let i = 0; i < Math.min(pos, flow.length); i++) {
+    const s = flow[i];
+    if (s.type === 'start') INTRO.forEach(t => { html += bot(t); });
+    else html += bot(sayOf(s) + (s.type === 'q' && s.q.hint ? `<small>${s.q.hint}</small>` : ''));
+    html += me(display(s));
+  }
+  let widget = '', say = '';
+  if (done) {
+    const nome = D.nome.split(' ')[0];
+    const c = qualificar(ans).classificacao;
+    const note = c === 'fora_do_prazo'
+      ? 'Como a saída ocorreu há mais de 2 anos, o prazo geral para ação trabalhista pode ter se encerrado. A equipe verificará, com transparência, se há alguma situação específica a ser analisada. Não é possível garantir qualquer resultado.'
+      : 'Esta análise é informativa e não garante resultado. Cada caso depende de suas circunstâncias e das provas disponíveis.';
+    [`Recebemos suas informações, ${esc(nome)}.`,
+     'O Dr. Marcelo Melo ou a equipe do escritório entrará em contato com você pelo WhatsApp em breve, para conversar sobre o seu caso.',
+     note, 'Mantenha o WhatsApp à mão e, se tiver, separe sua carteira de trabalho, holerites e termo de rescisão.'
+    ].forEach((t, i) => { html += bot(t, i === 0 ? 'cur' : ''); });
+    say = 'Recebemos suas informações.';
+  } else if (typing) {
+    html += `<div class="m bot"><img class="av" src="${AVATAR}" alt="" width="40" height="40"><div class="b typing" aria-hidden="true"><i></i><i></i><i></i></div></div>`;
+  } else {
+    const s = flow[pos];
+    if (s.type === 'start') INTRO.forEach((t, i) => { html += bot(t, i === 0 ? 'cur' : ''); }), say = INTRO.join(' ').replace(/<[^>]+>/g, '');
+    else {
+      let t = sayOf(s);
+      if (s.type === 'q' && s.q.hint) t += `<small>${s.q.hint}</small>`;
+      if (s.type === 'consent' && ans.tempo_saida === 'mais2a') t += '<small>Pelas suas respostas, a saída ocorreu há mais de 2 anos, o que em regra ultrapassa o prazo para ação trabalhista. Ainda assim, a equipe poderá analisar se há alguma exceção aplicável, sem garantia de resultado.</small>';
+      html += bot(t, 'cur'); say = sayOf(s);
+    }
+    widget = widgetHTML(s);
+  }
+  shown = idx;
+  chat.innerHTML = html + (widget ? `<div class="w${flow[pos].type === 'q' && flow[pos].q.multi ? ' multi' : ''}" id="w" tabindex="-1" aria-labelledby="cur" role="group">${widget}</div>` : '');
+  if (say) $('sr').textContent = say;
+  progress(flow);
+  if (widget) bindWidget(flow[pos]);
+  const target = chat.querySelector('#cur') || chat.lastElementChild;
+  const el = target && (target.closest('.m') || target);
+  if (el && (typing || pos > 0 || done)) el.scrollIntoView({block:'start', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'});
+}
+
+function progress(flow){
+  const n = flow.length - 1, d = done ? n : Math.max(0, Math.min(pos - 1, n));
+  $('segs').innerHTML = Array.from({length:n}, (_, i) => `<i class="${i < d ? 'on' : ''}"></i>`).join('');
+  $('segs').setAttribute('aria-valuenow', Math.round(d / n * 100));
+  $('cnt').textContent = d; $('tot').textContent = n;
+}
+
+const backBtn = () => pos > 0 ? '<button type="button" class="link back" data-back>← Voltar</button>' : '';
+function widgetHTML(s){
+  if (s.type === 'start') return '<button type="button" class="btn" data-start>Iniciar análise gratuita</button>';
+  if (s.type === 'q') {
+    const sel = ans[s.q.id] || (s.q.multi ? [] : null);
+    return s.q.opts.map(([v, l]) => `<button type="button" class="opt" data-v="${v}" aria-pressed="${s.q.multi ? sel.includes(v) : sel === v}"><span class="dot" aria-hidden="true"></span><span>${l}</span></button>`).join('')
+      + (s.q.multi ? '<button type="button" class="btn" data-next>Continuar</button><p class="err" id="e" role="alert"></p>' : '') + backBtn();
+  }
+  if (s.type === 'nome') return `<p class="lbl">Seu nome</p><form class="ask" novalidate><input type="text" id="f" autocomplete="name" placeholder="Nome e sobrenome" aria-label="Seu nome completo" aria-describedby="e" value="${esc(D.nome)}"><button class="go" aria-label="Enviar">↑</button></form><p class="err" id="e" role="alert"></p>${backBtn()}`;
+  if (s.type === 'whats') return `<p class="lbl">Seu WhatsApp</p><form class="ask" novalidate><input type="tel" id="f" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="15" aria-label="WhatsApp com DDD" aria-describedby="e" value="${esc(D.whats)}"><button class="go" aria-label="Enviar">↑</button></form><p class="err" id="e" role="alert"></p>${backBtn()}`;
+  if (s.type === 'extras') return `<form class="w" novalidate><input class="plain" type="email" id="f" autocomplete="email" placeholder="E-mail (opcional)" aria-label="E-mail (opcional)" aria-describedby="e" value="${esc(D.email)}"><input class="plain" type="text" id="f2" autocomplete="address-level2" placeholder="Cidade/UF (opcional)" aria-label="Cidade e UF (opcional)" value="${esc(D.cidade)}"><p class="err" id="e" role="alert"></p><button class="btn">Continuar</button></form>${backBtn()}`;
+  return `<form class="w" novalidate><label class="consent"><input type="checkbox" id="f" aria-describedby="e"><span>Li e concordo com o tratamento dos meus dados pessoais para fins de análise do meu caso e autorizo o contato por <b>WhatsApp</b> pelo Dr. Marcelo Melo ou sua equipe, conforme a <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a> (LGPD).</span></label><p class="err" id="e" role="alert"></p><div class="banner" id="net" role="alert" hidden></div><button class="btn" id="send">Receber minha análise</button></form>${backBtn()}`;
+}
+
+function bindWidget(s){
+  const w = $('w');
+  w.querySelectorAll('[data-back]').forEach(b => b.onclick = back);
+  const f = $('f');
+  if (s.type === 'start') w.querySelector('[data-start]').onclick = () => { track('ViewContent', {content_name:'Quiz Trabalhista - início'}); go(pos + 1); };
+  else if (s.type === 'q') {
+    w.querySelectorAll('.opt').forEach(b => b.onclick = () => pick(s.q, b.dataset.v, w, b));
+    const nx = w.querySelector('[data-next]');
+    if (nx) nx.onclick = () => { if (!(ans[s.q.id] || []).length) { $('e').textContent = 'Selecione ao menos uma opção.'; return; } go(pos + 1); };
+  } else if (s.type === 'nome' || s.type === 'whats') {
+    if (s.type === 'whats') f.addEventListener('input', () => { f.value = maskPhone(f.value); });
+    w.querySelector('form').onsubmit = e => {
+      e.preventDefault();
+      const v = f.value.trim().replace(/\s+/g, ' ');
+      const ok = s.type === 'nome' ? nameOk(v) : phoneOk(v);
+      f.setAttribute('aria-invalid', !ok);
+      $('e').textContent = ok ? '' : s.type === 'nome' ? 'Informe seu nome completo.' : 'Informe um WhatsApp válido com DDD. Ex.: (11) 91234-5678.';
+      if (!ok) return f.focus();
+      D[s.type === 'nome' ? 'nome' : 'whats'] = v; go(pos + 1);
+    };
+  } else if (s.type === 'extras') {
+    w.onsubmit = e => {
+      e.preventDefault();
+      const m = f.value.trim(), ok = mailOk(m);
+      f.setAttribute('aria-invalid', !ok); $('e').textContent = ok ? '' : 'E-mail inválido.';
+      if (!ok) return f.focus();
+      D.email = m; D.cidade = $('f2').value.trim(); go(pos + 1);
+    };
+  } else w.onsubmit = submit;
+  (f && s.type !== 'consent' ? f : w).focus({preventScroll:true});
+}
+
+function pick(q, v, w, btn){
+  if (!q.multi) {
+    ans[q.id] = v;
+    Q.forEach(x => { if (x.skip && x.skip(ans)) delete ans[x.id]; });   // descarta respostas de perguntas que viraram "puladas"
+    go(pos + 1);                                                        // avanço automático
+    return;
+  }
+  const cur = ans[q.id] || [];
+  let a = cur.filter(x => x !== q.exclusive);
+  if (v === q.exclusive) a = cur.includes(v) ? [] : [v];
+  else a = a.includes(v) ? a.filter(x => x !== v) : a.concat(v);
+  ans[q.id] = a;
+  w.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', a.includes(b.dataset.v)));
+  $('e').textContent = '';
+}
+
+function go(n){
+  pos = n; typing = true; render();
+  setTimeout(() => { typing = false; render(); }, TYPING_MS);
+}
+function back(){
+  if (typing || sending || pos === 0) return;
+  pos--; shown = 1e9; render();
 }
 
 /* ===== PAYLOAD ===== */
@@ -470,13 +415,12 @@ function resumo(nome, qual, resp, cidade){
   return lines.join('\n');
 }
 function buildPayload(){
-  const nome = $('nome').value.trim().replace(/\s+/g, ' ');
-  const cidade = [$('cidade').value.trim(), $('uf').value].filter(Boolean).join('/');
+  const nome = D.nome, cidade = D.cidade;
   const qual = qualificar(ans), resp = respostasLegiveis();
   const t = trackingParams();
   const fbc = cookie('_fbc') || (t.fbclid ? `fb.1.${Date.now()}.${t.fbclid}` : '');
   return Object.assign({
-    nome, whatsapp: '55' + digits($('whats').value), email: $('email').value.trim(), cidade,
+    nome, whatsapp: '55' + digits(D.whats), email: D.email, cidade,
     respostas: resp, score: qual.score, classificacao: qual.classificacao, alertas: qual.flags,
     acao_em_andamento: ans.advogado === 'acao_andamento',
     resumo_texto: resumo(nome, qual, resp, cidade)
@@ -503,47 +447,36 @@ async function post(payload){
   throw err;
 }
 
-$('form').addEventListener('submit', async e => {
+async function submit(e){
   e.preventDefault();
-  if (sending || sent) return;                         // bloqueia duplo clique
-  $('netErr').hidden = true;
-  if (!validate()) return;
+  if (sending || done) return;                         // bloqueia duplo clique
+  $('net').hidden = true;
+  const f = $('f');
+  f.setAttribute('aria-invalid', !f.checked);
+  $('e').textContent = f.checked ? '' : 'Para continuar, é necessário concordar com o tratamento dos dados e o contato por WhatsApp.';
+  if (!f.checked) return f.focus();
   sending = true;
-  const btn = $('send'); btn.disabled = true; btn.textContent = 'Enviando…'; $('form').setAttribute('aria-busy','true');
+  const btn = $('send'); btn.disabled = true; btn.textContent = 'Enviando…'; $('w').setAttribute('aria-busy','true');
   eventId = eventId || uuid();
   const payload = buildPayload();
   try {
     if (!webhookOn) throw new Error('WEBHOOK_URL não configurada');
     await post(payload);
-    sent = true;
+    done = true; sending = false;
     track('Lead', {content_name:'Quiz Trabalhista', content_category: payload.classificacao}, {eventID: eventId});
-    renderThanks(payload.classificacao);
+    pos = steps().length; typing = true; render();
+    setTimeout(() => { typing = false; render(); }, TYPING_MS);
   } catch (err) {
+    sending = false;
     console.error('[quiz] falha no envio', err);
-    const b = $('netErr');
+    const b = $('net');
     b.textContent = 'Não conseguimos enviar agora. Seus dados foram mantidos: confira sua conexão e tente novamente.';
     b.hidden = false;
-    btn.disabled = false; btn.textContent = 'Tentar novamente';
-  } finally {
-    sending = false; $('form').removeAttribute('aria-busy');
+    btn.disabled = false; btn.textContent = 'Tentar novamente'; $('w').removeAttribute('aria-busy');
   }
-});
-
-function renderThanks(c){
-  $('tyMain').textContent = 'O Dr. Marcelo Melo ou a equipe do escritório entrará em contato com você pelo WhatsApp em breve, para conversar sobre o seu caso.';
-  $('tyNote').textContent = c === 'fora_do_prazo'
-    ? 'Como a saída ocorreu há mais de 2 anos, o prazo geral para ação trabalhista pode ter se encerrado. A equipe verificará, com transparência, se há alguma situação específica a ser analisada. Não é possível garantir qualquer resultado.'
-    : 'Esta análise é informativa e não garante resultado. Cada caso depende de suas circunstâncias e das provas disponíveis.';
-  show('s-ty');
-  focusTitle($('h-ty'));
 }
 
-/* ===== EVENTOS ===== */
-$('start').addEventListener('click', () => {
-  track('ViewContent', {content_name:'Quiz Trabalhista - início'});
-  hist = []; renderQ(0);
-});
-$('back').addEventListener('click', goBack);
+render();
 })();
 </script>
 </body>

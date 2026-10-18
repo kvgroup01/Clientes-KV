@@ -1,6 +1,6 @@
 # Quiz – Análise informativa (Direito do Trabalho)
 
-Landing page em quiz, arquivo único (`index.html`), HTML/CSS/JS puro, sem build. Basta hospedar o arquivo (Netlify, Vercel, Cloudflare Pages, S3, etc.).
+Landing page em quiz no formato de conversa (balões de chat com a foto do Dr. Marcelo, progresso em segmentos), HTML/CSS/JS puro, sem build. Basta hospedar a pasta (Netlify, Vercel, Cloudflare Pages, S3, etc.): `index.html` + `avatar-dr-marcelo.webp` (foto redonda dos balões) + `logo-dr-marcelo.webp`.
 
 ## Configuração (topo do `<script>` em `index.html`)
 
@@ -9,7 +9,7 @@ Landing page em quiz, arquivo único (`index.html`), HTML/CSS/JS puro, sem build
 | `WEBHOOK_URL` | Trocar `COLE_AQUI_A_URL_DO_WEBHOOK_N8N` pela URL de produção do nó **Webhook** do n8n (método POST). Se não for uma URL `http(s)`, o envio falha com mensagem amigável (nenhum lead é "engolido" silenciosamente). |
 | `PIXEL_ID` | Trocar `COLE_AQUI_O_PIXEL_ID` pelo ID numérico do Pixel. Enquanto não for numérico, o Pixel fica desativado. |
 
-Outros pontos a trocar: foto (`<img id="foto">`, `src`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
+Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, constante `AVATAR`) e logo (`logo-dr-marcelo.webp`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
 
 **CORS no n8n:** o navegador faz um preflight por causa do `Content-Type: application/json`. No nó Webhook, em *Options → Allowed Origins (CORS)*, informe o domínio da landing page (ou `*` para testar).
 
