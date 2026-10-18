@@ -235,14 +235,19 @@ const steps = () => [{type:'start'}].concat(applicable().map(q => ({type:'q', q}
 const sayOf = s => s.type === 'q' ? s.q.title
   : s.type === 'consent' ? 'Última etapa. Para enviar sua análise, preciso do seu consentimento.' : s.say;
 
-/* ===== LOCALIZAÇÃO POR IP (aproximada, em segundo plano; se falhar, segue sem) =====
-   ponytail: serviço gratuito de terceiros; troque por geo no n8n (IP da requisição) se precisar de mais garantia. */
-(function(){
+/* ===== LOCALIZAÇÃO POR IP (aproximada) =====
+   Só roda DEPOIS do consentimento (checkbox marcado) e o texto do consentimento informa a coleta.
+   Serviço de terceiros (ipwho.is). Se falhar ou for bloqueado, segue sem localização.
+   ponytail: troque por geo no n8n (IP da requisição) se precisar de mais garantia. */
+let geoP = null;
+function geoLookup(){
+  if (geoP) return geoP;
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 4000);
-  fetch('https://ipwho.is/?fields=success,ip,city,region,country', {signal: ctl.signal})
+  geoP = fetch('https://ipwho.is/?fields=success,ip,city,region,country', {signal: ctl.signal})
     .then(r => r.json()).then(j => { if (j && j.success) Object.assign(G, {cidade:j.city||'', estado:j.region||'', pais:j.country||'', ip:j.ip||''}); })
     .catch(() => {}).finally(() => clearTimeout(to));
-})();
+  return geoP;
+}
 
 /* ===== MÁSCARA / VALIDAÇÃO ===== */
 const digits = s => s.replace(/\D/g, '');
@@ -333,7 +338,7 @@ function widgetHTML(s){
   }
   if (s.type === 'nome') return `<p class="lbl">Seu nome</p><form class="ask" novalidate><input type="text" id="f" autocomplete="name" placeholder="Nome e sobrenome" aria-label="Seu nome completo" aria-describedby="e" value="${esc(D.nome)}"><button class="go" aria-label="Enviar">↑</button></form><p class="err" id="e" role="alert"></p>${backBtn()}`;
   if (s.type === 'whats') return `<p class="lbl">Seu WhatsApp</p><form class="ask" novalidate><input type="tel" id="f" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="15" aria-label="WhatsApp com DDD" aria-describedby="e" value="${esc(D.whats)}"><button class="go" aria-label="Enviar">↑</button></form><p class="err" id="e" role="alert"></p>${backBtn()}`;
-  return `<form class="w" novalidate><label class="consent"><input type="checkbox" id="f" aria-describedby="e"><span>Li e concordo com o tratamento dos meus dados pessoais para fins de análise do meu caso e autorizo o contato por <b>WhatsApp</b> pelo Dr. Marcelo Melo ou sua equipe, conforme a <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a> (LGPD).</span></label><p class="err" id="e" role="alert"></p><div class="banner" id="net" role="alert" hidden></div><button class="btn" id="send">Receber minha análise</button></form>${backBtn()}`;
+  return `<form class="w" novalidate><label class="consent"><input type="checkbox" id="f" aria-describedby="e"><span>Li e concordo com o tratamento dos meus dados pessoais para fins de análise do meu caso e autorizo o contato por <b>WhatsApp</b> pelo Dr. Marcelo Melo ou sua equipe, conforme a <a href="#politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a> (LGPD). Autorizo também o registro da minha localização aproximada (cidade, estado e país) e do meu IP.</span></label><p class="err" id="e" role="alert"></p><div class="banner" id="net" role="alert" hidden></div><button class="btn" id="send">Receber minha análise</button></form>${backBtn()}`;
 }
 
 function bindWidget(s){
@@ -356,7 +361,7 @@ function bindWidget(s){
       if (!ok) return f.focus();
       D[s.type === 'nome' ? 'nome' : 'whats'] = v; go(pos + 1);
     };
-  } else w.onsubmit = submit;
+  } else { f.addEventListener('change', () => { if (f.checked) geoLookup(); }); w.onsubmit = submit; }
   (f && s.type !== 'consent' ? f : w).focus({preventScroll:true});
 }
 
@@ -458,6 +463,7 @@ async function submit(e){
   sending = true;
   const btn = $('send'); btn.disabled = true; btn.textContent = 'Enviando…'; $('w').setAttribute('aria-busy','true');
   eventId = eventId || uuid();
+  await geoLookup();                                   // só após o consentimento
   const payload = buildPayload();
   try {
     if (!webhookOn) throw new Error('WEBHOOK_URL não configurada');

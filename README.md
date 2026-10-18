@@ -73,6 +73,10 @@ Observações:
 
 Soma de pontos (0–100): tempo desde a saída (até 25), vínculo (até 15), tempo de empresa (até 15), situações relatadas (5 por item, até 20), documentos (2 por item, até 10), rescisão (até 8), sem ação anterior (+5), ainda trabalha (+10), ação em andamento (−30), ação encerrada (−10). **Quente ≥ 65, morno ≥ 40, frio < 40.** Saída há mais de 2 anos = `fora_do_prazo`, sempre (o lead é capturado, com mensagem honesta de que o prazo geral pode ter se encerrado).
 
+## Localização por IP e privacidade
+
+Cidade, estado, país e IP são obtidos no navegador via **ipwho.is** (terceiro) **somente depois que o usuário marca o consentimento**, e o texto do consentimento informa essa coleta. Se o serviço falhar ou for bloqueado, o lead segue sem localização. Cite o ipwho.is e a coleta de IP/localização na Política de Privacidade. Alternativa mais robusta: remover o `geoLookup()` e resolver a localização no n8n a partir do IP da requisição.
+
 ## Envio
 
 Timeout de 10 s por tentativa, 3 tentativas automáticas (1 s e 2 s de espera). Se todas falharem, o formulário mantém os dados, mostra um aviso e o botão vira "Tentar novamente". O botão fica bloqueado durante o envio.
