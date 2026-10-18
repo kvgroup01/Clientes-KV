@@ -7,6 +7,7 @@ Landing page em quiz no formato de conversa (balões de chat com a foto do Dr. M
 | Constante | O que fazer |
 |---|---|
 | `WEBHOOK_URL` | Trocar `COLE_AQUI_A_URL_DO_WEBHOOK_N8N` pela URL de produção do nó **Webhook** do n8n (método POST). Se não for uma URL `http(s)`, o envio falha com mensagem amigável (nenhum lead é "engolido" silenciosamente). |
+| `WHATSAPP_ESCRITORIO` | Número que enviará a mensagem automática (só dígitos, 55+DDD, ex.: `5592999999999`). Usado no botão "Abrir WhatsApp" da tela final. |
 | `PIXEL_ID` | Trocar `COLE_AQUI_O_PIXEL_ID` pelo ID numérico do Pixel. Enquanto não for numérico, o Pixel fica desativado. |
 
 Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, constante `AVATAR`) e logo (`logo-dr-marcelo.webp`), nome/OAB (`OAB/UF 000.000`, hero e rodapé), link da Política de Privacidade (`#politica-de-privacidade`), `og:image`, e a meta `noindex` (remova para indexar).
@@ -20,14 +21,17 @@ Outros pontos a trocar: foto dos balões (arquivo `avatar-dr-marcelo.webp`, cons
 
 ## Payload (POST JSON)
 
-Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos de topo, todos sempre presentes e em snake_case: `nome`, `whatsapp`, `email`, `cidade`, `respostas`, `score`, `classificacao`, `alertas`, `acao_em_andamento`, `resumo_texto`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `fbp`, `fbc`, `url`, `user_agent`, `timestamp`, `event_id`. Vazios chegam como `""` (ou `[]` em `alertas`). As chaves internas de `respostas` são os enunciados em português, não snake_case.
+Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos de topo, todos sempre presentes e em snake_case: `nome`, `whatsapp`, `email` (sempre vazio, mantido por compatibilidade), `cidade`, `estado`, `pais`, `ip` (cidade/estado/país/IP aproximados, obtidos por IP no navegador via ipwho.is; vazios se o serviço falhar ou for bloqueado), `respostas`, `score`, `classificacao`, `alertas`, `acao_em_andamento`, `resumo_texto`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `fbclid`, `fbp`, `fbc`, `url`, `user_agent`, `timestamp`, `event_id`. Vazios chegam como `""` (ou `[]` em `alertas`). As chaves internas de `respostas` são os enunciados em português, não snake_case.
 
 ```json
 {
   "nome": "Maria da Silva",
   "whatsapp": "5511912345678",
-  "email": "maria@exemplo.com",
-  "cidade": "São Paulo/SP",
+  "email": "",
+  "cidade": "Manaus",
+  "estado": "Amazonas",
+  "pais": "Brasil",
+  "ip": "177.1.2.3",
   "respostas": {
     "Situação atual": "Fui demitido(a)",
     "Tempo desde a saída da empresa": "Há menos de 6 meses",
@@ -37,8 +41,7 @@ Exemplo real, capturado no teste de um lead quente (valores fictícios). Campos 
     "Faixa salarial": "De R$ 2.000 a R$ 4.000",
     "Rescisão e documentos assinados": "Recebi valores, mas não entendi o cálculo",
     "Advogado ou ação anterior": "Não, ainda não",
-    "Documentos disponíveis": ["Carteira de trabalho", "Holerites / contracheques", "Termo de rescisão (TRCT)"],
-    "Preferência de contato": "O quanto antes"
+    "Documentos disponíveis": ["Carteira de trabalho", "Holerites / contracheques", "Termo de rescisão (TRCT)"]
   },
   "score": 81,
   "classificacao": "quente",
